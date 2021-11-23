@@ -12,7 +12,7 @@ import java.util.Optional;
 @RequestMapping("items")
 public class ItemController {
 
-    ItemService itemService;
+    private final ItemService itemService;
 
     public ItemController(ItemService itemService) {
         this.itemService = itemService;

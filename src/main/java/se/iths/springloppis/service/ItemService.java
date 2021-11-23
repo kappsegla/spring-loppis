@@ -11,9 +11,9 @@ import java.util.Optional;
 @Service
 public class ItemService {
 
-// Field injection - not recommended
+    // Field injection - not recommended
 //    @Autowired
-    ItemRepository itemRepository;
+    private final ItemRepository itemRepository;
 
     public ItemService(ItemRepository itemRepository) {
         this.itemRepository = itemRepository;
