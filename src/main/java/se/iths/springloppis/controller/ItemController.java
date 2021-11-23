@@ -1,5 +1,7 @@
 package se.iths.springloppis.controller;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import se.iths.springloppis.entity.ItemEntity;
 import se.iths.springloppis.service.ItemService;
@@ -16,23 +18,28 @@ public class ItemController {
         this.itemService = itemService;
     }
 
-    @PostMapping("")
-    public ItemEntity createItem(@RequestBody ItemEntity itemEntity) {
-        return itemService.createItem(itemEntity);
+    @PostMapping()
+    public ResponseEntity<ItemEntity> createItem(@RequestBody ItemEntity itemEntity) {
+        ItemEntity createdItem = itemService.createItem(itemEntity);
+        return new ResponseEntity<>(createdItem, HttpStatus.CREATED);
     }
 
     @DeleteMapping("{id}")
-    public void deleteItem(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteItem(@PathVariable Long id) {
         itemService.deleteItem(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @GetMapping("{id}")
-    public Optional<ItemEntity> findItemById(@PathVariable Long id) {
-        return itemService.findItemById(id);
+    public ResponseEntity<Optional<ItemEntity>> findItemById(@PathVariable Long id) {
+        Optional<ItemEntity> foundItem = itemService.findItemById(id);
+        return new ResponseEntity<>(foundItem, HttpStatus.OK);
+
     }
 
-    @GetMapping("")
-    public Iterable<ItemEntity> findAllItems() {
-        return itemService.findAllItems();
+    @GetMapping()
+    public ResponseEntity<Iterable<ItemEntity>> findAllItems() {
+        Iterable<ItemEntity> allItems = itemService.findAllItems();
+        return new ResponseEntity<>(allItems, HttpStatus.OK);
     }
 }
