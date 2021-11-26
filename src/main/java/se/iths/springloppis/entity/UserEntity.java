@@ -12,6 +12,7 @@ public class UserEntity {
     private Long id;
     private String username;
     private String email;
+    private String password;
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<ItemEntity> items = new ArrayList<>();
 
@@ -26,6 +27,14 @@ public class UserEntity {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getUsername() {
