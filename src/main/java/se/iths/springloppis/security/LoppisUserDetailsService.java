@@ -10,7 +10,7 @@ import se.iths.springloppis.repository.UserRepository;
 @Service
 public class LoppisUserDetailsService implements UserDetailsService {
 
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
     public LoppisUserDetailsService(UserRepository userRepository) {
         super();

@@ -17,6 +17,8 @@ public class ItemEntity {
     @ManyToOne
     private UserEntity user;
 
+
+
     // Denna metod körs innan objektet skrivs till DB
     @PrePersist
     public void getCurrentDate() {

@@ -1,10 +1,14 @@
 package se.iths.springloppis.security;
 
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import se.iths.springloppis.entity.RoleEntity;
 import se.iths.springloppis.entity.UserEntity;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Set;
 
 public class LoppisUserPrincipal implements UserDetails {
 
@@ -15,10 +19,17 @@ public class LoppisUserPrincipal implements UserDetails {
         this.userEntity = userEntity;
     }
 
+    // Omvandla RoleEntity till något som Spring Security förstår, d.v.s. en SimpleGrantedAuthority
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        Set<RoleEntity> roles = userEntity.getRoles();
+        Collection<GrantedAuthority> grantedAuthorities = new ArrayList<>(roles.size());
+        for (RoleEntity role : roles) {
+            grantedAuthorities.add(new SimpleGrantedAuthority(role.getRole().toUpperCase()));
+        }
+        return grantedAuthorities;
     }
+
 
     @Override
     public String getPassword() {
