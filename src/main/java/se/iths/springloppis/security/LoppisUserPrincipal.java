@@ -24,9 +24,11 @@ public class LoppisUserPrincipal implements UserDetails {
     // Omvandla RoleEntity till något som Spring Security förstår, d.v.s. en SimpleGrantedAuthority
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        Set<RoleEntity> roles = userEntity.getRoles();
-        return userEntity.getRoles()
-                .stream().map(authority -> new SimpleGrantedAuthority(authority.getRole())).collect(Collectors.toList());
+        return userEntity.getRoles().stream()
+                .map(RoleEntity::getRole)
+                .map(String::toUpperCase)
+                .map(SimpleGrantedAuthority::new)
+                .toList();
     }
 
     @Override
