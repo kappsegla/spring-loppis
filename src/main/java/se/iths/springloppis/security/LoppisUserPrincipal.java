@@ -8,11 +8,13 @@ import se.iths.springloppis.entity.UserEntity;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class LoppisUserPrincipal implements UserDetails {
 
-    private UserEntity userEntity;
+    private final UserEntity userEntity;
 
     public LoppisUserPrincipal(UserEntity userEntity) {
         super();
@@ -23,13 +25,9 @@ public class LoppisUserPrincipal implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         Set<RoleEntity> roles = userEntity.getRoles();
-        Collection<GrantedAuthority> grantedAuthorities = new ArrayList<>(roles.size());
-        for (RoleEntity role : roles) {
-            grantedAuthorities.add(new SimpleGrantedAuthority(role.getRole().toUpperCase()));
-        }
-        return grantedAuthorities;
+        return userEntity.getRoles()
+                .stream().map(authority -> new SimpleGrantedAuthority(authority.getRole())).collect(Collectors.toList());
     }
-
 
     @Override
     public String getPassword() {

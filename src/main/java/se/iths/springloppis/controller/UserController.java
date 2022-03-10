@@ -25,13 +25,6 @@ public class UserController {
     public ResponseEntity<UserEntity> createUser(@RequestBody UserEntity user) {
         UserEntity createdUser = userService.createUser(user);
 
-        // FOR DEMO PURPOSE
-        logger.trace("Vi loggar på TRACE-nivå");
-        logger.debug("Vi loggar på DEBUG-nivå");
-        logger.info("Vi loggar på INFO-nivå");
-        logger.warn("Vi loggar på WARN-nivå");
-        logger.error("Vi loggar på ERROR-nivå");
-
         return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
     }
 

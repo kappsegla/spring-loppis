@@ -19,7 +19,6 @@ public class SpringLoppisApplication {
     @Bean
     public CommandLineRunner setUpRole(RoleRepository roleRepository) {
         return (args) -> {
-
             roleRepository.save(new RoleEntity("ROLE_ADMIN"));
             roleRepository.save(new RoleEntity("ROLE_USER"));
         };

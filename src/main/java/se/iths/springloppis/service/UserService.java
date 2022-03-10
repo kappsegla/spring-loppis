@@ -1,6 +1,7 @@
 package se.iths.springloppis.service;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import se.iths.springloppis.entity.RoleEntity;
 import se.iths.springloppis.entity.UserEntity;
@@ -17,11 +18,12 @@ public class UserService {
     private final RoleRepository roleRepository;
 
 
-    private BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+    private PasswordEncoder passwordEncoder;
 
-    public UserService(UserRepository userRepository, RoleRepository roleRepository) {
+    public UserService(UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public UserEntity createUser(UserEntity userEntity) {
