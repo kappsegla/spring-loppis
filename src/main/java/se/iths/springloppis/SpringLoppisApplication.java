@@ -12,7 +12,6 @@ public class SpringLoppisApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(SpringLoppisApplication.class, args);
-
     }
 
     // Generate data at startup
