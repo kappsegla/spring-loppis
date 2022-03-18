@@ -3,6 +3,7 @@ package se.iths.springloppis.controller;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import se.iths.springloppis.dtos.Item;
 import se.iths.springloppis.entity.ItemEntity;
 import se.iths.springloppis.service.ItemService;
 
@@ -19,9 +20,14 @@ public class ItemController {
     }
 
     @PostMapping()
-    public ResponseEntity<ItemEntity> createItem(@RequestBody ItemEntity itemEntity) {
-        ItemEntity createdItem = itemService.createItem(itemEntity);
+    public ResponseEntity<Item> createItem(@RequestBody Item item) {
+        Item createdItem = itemService.createItem(item);
         return new ResponseEntity<>(createdItem, HttpStatus.CREATED);
+    }
+
+    @PatchMapping("{id}")
+    public ResponseEntity<ItemEntity> updateItemName(@PathVariable Long id, @RequestBody String name){
+        return new ResponseEntity<>(itemService.updateItem(id, name),HttpStatus.OK);
     }
 
     @DeleteMapping("{id}")

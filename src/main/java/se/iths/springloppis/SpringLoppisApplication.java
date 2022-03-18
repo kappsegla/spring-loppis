@@ -1,9 +1,12 @@
 package se.iths.springloppis;
 
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Scope;
 import se.iths.springloppis.entity.RoleEntity;
 import se.iths.springloppis.repository.RoleRepository;
 
@@ -23,4 +26,9 @@ public class SpringLoppisApplication {
         };
     }
 
+    @Bean
+    @Scope(ConfigurableBeanFactory.SCOPE_SINGLETON)
+    public ModelMapper createModelMapper(){
+        return new ModelMapper();
+    }
 }
