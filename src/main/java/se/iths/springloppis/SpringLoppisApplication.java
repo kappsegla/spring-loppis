@@ -21,7 +21,9 @@ public class SpringLoppisApplication {
     @Bean
     public CommandLineRunner setUpRole(RoleRepository roleRepository) {
         return (args) -> {
-            roleRepository.save(new RoleEntity("ROLE_ADMIN"));
+            if( roleRepository.findByRole("ROLE_ADMIN") == null )
+                roleRepository.save(new RoleEntity("ROLE_ADMIN"));
+            if( roleRepository.findByRole("ROLE_USER") == null )
             roleRepository.save(new RoleEntity("ROLE_USER"));
         };
     }
