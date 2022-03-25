@@ -7,6 +7,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
@@ -15,7 +16,10 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableWebSecurity
-public class SecurityConfig {
+public class SecurityConfig{
+
+
+    String[] urls = {"/items","/users/signup"};
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -24,12 +28,15 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain configure(HttpSecurity http) throws Exception {
-      return http
-                .csrf().disable()
+        return http
+                .csrf()
+                //Disable csrf for all endpoints .disable()
+                .ignoringAntMatchers(urls)  //Disable csrf for all endpoints in urls
+                .and()
                 .httpBasic()
                 .and()
                 .authorizeRequests()
-                .antMatchers("/admin", "/items").hasRole("ADMIN")
+                .antMatchers("/admin").hasRole("ADMIN")
                 .antMatchers("/", "/home", "/users/signup").permitAll()
                 .anyRequest().authenticated()
                 .and()
@@ -37,8 +44,7 @@ public class SecurityConfig {
                 .loginPage("/login").permitAll()
                 .and()
                 .logout()
-                .invalidateHttpSession(true)
-                .clearAuthentication(true)
                 .permitAll().and().build();
+
     }
 }

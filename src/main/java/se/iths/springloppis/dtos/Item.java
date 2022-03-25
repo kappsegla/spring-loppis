@@ -1,11 +1,19 @@
 package se.iths.springloppis.dtos;
 
 public class Item {
+    private Long id;
     private String name;
     private String category;
     private int quantity;
     private double price;
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;
